@@ -5,34 +5,22 @@ from bs4 import BeautifulSoup as bs
 import json
 
 class CurrencyConverter:
-    def __init__(self, url):
-        self.data = requests.get(url).json()
-        self.currencies = self.data['rates']
-
-converter = CurrencyConverter('https://api.exchangerate-api.com/v4/latest/USD')
+    def __init__(self, filepath):
+        with open(filepath, 'r') as file:
+            self.currencies = json.load(file)
 
 def setup_combobox(master, variable, row, column):
-    combobox = ttk.Combobox(master, textvariable=variable, values=list(converter.currencies.keys()), width=20)
+    combobox = ttk.Combobox(master, textvariable=variable, values=list(converter.currencies.keys()), width=3)
     combobox.grid(row=row, column=column, sticky='ew', padx=5, pady=5)
-    combobox.bind('<KeyRelease>', lambda event: update_combobox_options(combobox))
+    combobox.bind('<KeyRelease>', lambda event: [combobox.set(combobox.get().upper()), update_combobox_options(combobox)])
     return combobox
 
 def update_combobox_options(combobox):
-    value = combobox.get().upper()
+    value = combobox.get()
     filtered_options = [currency for currency in converter.currencies if value in currency]
     combobox['values'] = filtered_options
     if value not in filtered_options:
         combobox.set(value)
-
-def change_button_color_on_hover(button, on_enter_color, on_leave_color):
-    def on_enter(e):
-        button.config(foreground=on_enter_color)
-    
-    def on_leave(e):
-        button.config(foreground=on_leave_color)
-    
-    button.bind("<Enter>", on_enter)
-    button.bind("<Leave>", on_leave)
 
 def conversion():
     source_currency = source_currency_var.get()
@@ -48,6 +36,7 @@ def conversion():
     soup = bs(response.text, 'html.parser')
     rate = float(soup.find('span', class_='ccOutputTrail').previous_sibling.replace(',', ''))
     result = amount * rate
+    result = result / 10
 
     save_data(source_currency, target_currency, amount, result, rounded_var.get())
 
@@ -75,6 +64,8 @@ def save_data(source, target, amount, result, rounded):
         json.dump(data, file)
         file.write("\n")
 
+converter = CurrencyConverter('currencies.json')
+
 conversion_app = tk.Tk()
 conversion_app.title('Currency Converter')
 conversion_app.geometry('700x500')
@@ -83,7 +74,7 @@ conversion_app.configure(bg='black')
 style = ttk.Style()
 style.theme_use('default')
 style.configure('TLabel', background='black', foreground='white')
-style.configure('TButton', background='black', foreground='white')
+style.configure('TButton', background='white', foreground='black')
 style.configure('TCheckbutton', background='black', foreground='white')
 style.configure('TEntry', background='white', foreground='black')
 style.configure('TCombobox', fieldbackground='white', background='white', foreground='black')
@@ -92,29 +83,27 @@ source_currency_var = tk.StringVar(conversion_app)
 target_currency_var = tk.StringVar(conversion_app)
 rounded_var = tk.IntVar(conversion_app)
 
-ttk.Label(conversion_app, text='From:', font='Calibri 12').grid(row=0, column=0, pady=10)
-ttk.Label(conversion_app, text='To:', font='Calibri 12').grid(row=1, column=0, pady=10)
-ttk.Label(conversion_app, text='Amount:', font='Calibri 12').grid(row=2, column=0, pady=10)
+ttk.Label(conversion_app, text='From:', font='Calibri 12').grid(row=0, column=4, pady=10)
+ttk.Label(conversion_app, text='To:', font='Calibri 12').grid(row=1, column=4, pady=10)
+ttk.Label(conversion_app, text='Amount:', font='Calibri 12').grid(row=2, column=4, pady=10)
 
 amount_entry = ttk.Entry(conversion_app, font='Calibri 12')
-amount_entry.grid(row=2, column=1, pady=5, sticky='ew')
+amount_entry.grid(row=2, column=5, pady=5, sticky='ew')
 
 result_label = ttk.Label(conversion_app, font='Calibri 12 bold', foreground='green')
-result_label.grid(row=8, column=1, sticky='w')
+result_label.grid(row=8, column=5, sticky='w')
 
 error_label = ttk.Label(conversion_app, font='Calibri 10', foreground='red')
-error_label.grid(row=9, column=0, columnspan=2)
+error_label.grid(row=9, column=4, columnspan=2)
 
 check_rounded = ttk.Checkbutton(conversion_app, text="Round to 2 decimal places", variable=rounded_var)
-check_rounded.grid(row=3, column=1, pady=5, sticky='w')
+check_rounded.grid(row=3, column=5, pady=5, sticky='w')
 
 button_convert = ttk.Button(conversion_app, text='Convert', command=conversion)
-button_convert.grid(row=4, column=1, pady=5, sticky='ew')
-change_button_color_on_hover(button_convert, 'black', 'white')
+button_convert.grid(row=4, column=5, pady=5, sticky='ew')
 
 button_clear = ttk.Button(conversion_app, text='Clear', command=clear)
-button_clear.grid(row=5, column=1, pady=5, sticky='ew')
-change_button_color_on_hover(button_clear, 'black', 'white')
+button_clear.grid(row=5, column=5, pady=5, sticky='ew')
 
 setup_combobox(conversion_app, source_currency_var, 0, 1)
 setup_combobox(conversion_app, target_currency_var, 1, 1)

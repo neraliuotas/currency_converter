@@ -1,0 +1,10 @@
+{"source_currency": "USd", "target_currency": "EUr", "amount": 10.0, "result": 92.47999999999999, "rounded": false}
+{"source_currency": "USD", "target_currency": "EUR", "amount": 10.0, "result": 0, "rounded": false}
+{"source_currency": "USD", "target_currency": "EUR", "amount": 10.0, "result": 0, "rounded": false}
+{"source_currency": "USD", "target_currency": "EU", "amount": 10.0, "result": 0.0, "rounded": false}
+{"source_currency": "USD", "target_currency": "EUr", "amount": 10.0, "result": 92.53, "rounded": false}
+{"source_currency": "EUR", "target_currency": "USD", "amount": 10.0, "result": 108.10000000000001, "rounded": false}
+{"source_currency": "EUR", "target_currency": "USD", "amount": 10.0, "result": 108.10000000000001, "rounded": true}
+{"source_currency": "EUR", "target_currency": "USD", "amount": 10.0, "result": 10.81, "rounded": false}
+{"source_currency": "USD", "target_currency": "EUR", "amount": 10.0, "result": 9.245, "rounded": false}
+{"source_currency": "USD", "target_currency": "EUR", "amount": 10.0, "result": 9.245, "rounded": true}
