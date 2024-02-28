@@ -48,25 +48,30 @@ def update_combobox_options(combobox, variable):
         combobox['values'] = all_currencies
 
 def conversion():
-    source_currency = source_currency_var.get()
-    target_currency = target_currency_var.get()
+    source_currency = source_currency_var.get().upper()
+    target_currency = target_currency_var.get().upper()
     amount = amount_entry.get()
 
-    if not amount.replace('.', '', 1).isdigit():
-        error_label.config(text="Please enter a valid number")
+    if source_currency not in converter.currencies or target_currency not in converter.currencies:
+        error_label.config(text="Invalid currency code", foreground="red")
         return
 
+    if not amount.replace('.', '', 1).isdigit():
+        error_label.config(text="Please enter a valid number", foreground="red")
+        return
+
+    error_label.config(text="")
+
     amount = float(amount)
-    response = requests.get(f'https://www.x-rates.com/calculator/?from={source_currency}&to={target_currency}&amount={amount}')
+    response = requests.get(f'https://www.x-rates.com/calculator/?from={source_currency}&to={target_currency}&amount=1')
     soup = bs(response.text, 'html.parser')
     rate = float(soup.find('span', class_='ccOutputTrail').previous_sibling.replace(',', ''))
-    result = (amount * rate) / 100
+    result = amount * rate
 
     save_data(source_currency, target_currency, amount, result)
     
-    result_text = f"{amount:.2f} {source_currency} is {result:.4f} {target_currency}"
+    result_text = f"{amount:.2f} {source_currency} is {result:.5f} {target_currency}"
     result_label.config(text=result_text[:5] + result_text[5:])
-    error_label.config(text='')
 
 def clear():
     source_currency_var.set('')
@@ -133,7 +138,7 @@ result_label = ttk.Label(conversion_app, font='Arial 10 bold', foreground='green
 result_label.place(relx=0.5, rely=0.7, anchor='center')
 
 error_label = ttk.Label(conversion_app, font='Arial 10', foreground='red')
-error_label.place(relx=0.5, rely=0.7, anchor='center')
+error_label.place(relx=0.5, rely=0.9, anchor='center')
 
 setup_from_combobox(conversion_app, source_currency_var)
 setup_to_combobox(conversion_app, target_currency_var)
