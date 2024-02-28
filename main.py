@@ -14,24 +14,31 @@ class CurrencyConverter:
 def setup_from_combobox(master, variable):
     from_combobox = ttk.Combobox(master, textvariable=variable, values=list(converter.currencies.keys()), width=10)
     from_combobox.place(relx=0.5, rely=0.15, anchor='center')
-    from_combobox.bind('<KeyRelease>', lambda event: [from_combobox.set(from_combobox.get().upper()), update_combobox_options(from_combobox, variable)])
+    from_combobox.bind('<KeyRelease>', lambda event: key_release_handler(event, from_combobox, variable))
     return from_combobox
 
 def setup_to_combobox(master, variable):
     to_combobox = ttk.Combobox(master, textvariable=variable, values=list(converter.currencies.keys()), width=10)
     to_combobox.place(relx=0.5, rely=0.25, anchor='center')
-    to_combobox.bind('<KeyRelease>', lambda event: [to_combobox.set(to_combobox.get().upper()), update_combobox_options(to_combobox, variable)])
+    to_combobox.bind('<KeyRelease>', lambda event: key_release_handler(event, to_combobox, variable))
     return to_combobox
+
+def key_release_handler(event, combobox, variable):
+    content = combobox.get().upper()
+    filtered_content = ''.join(filter(str.isalpha, content))
+    valid_content = filtered_content[:3]
+    variable.set(valid_content)
+    update_combobox_options(combobox, variable)
 
 def update_combobox_options(combobox, variable):
     typed_value = combobox.get().upper()
     all_currencies = list(converter.currencies.keys())
-    
+
     filtered_options = [currency for currency in all_currencies if typed_value in currency]
-    
+
     if typed_value:
         combobox['values'] = filtered_options
-        
+
         matches = difflib.get_close_matches(typed_value, filtered_options, n=1, cutoff=0.6)
         if matches:
             closest_match = matches[0]

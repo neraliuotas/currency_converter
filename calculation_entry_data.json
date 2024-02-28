@@ -63,3 +63,5 @@
 {"source_currency": "EURR", "target_currency": "USDD", "amount": 100.0, "result": 0.0}
 {"source_currency": "CAD", "target_currency": "EUR", "amount": 111.0, "result": 83.8383}
 {"source_currency": "", "target_currency": "", "amount": 111.0, "result": 0.0}
+{"source_currency": "USD", "target_currency": "EUR", "amount": 100.0, "result": 92.29}
+{"source_currency": "12", "target_currency": "3", "amount": 100.0, "result": 0.0}
