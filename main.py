@@ -11,11 +11,17 @@ class CurrencyConverter:
             self.currencies = json.load(file)
 
 
-def setup_combobox(master, variable, row, column):
-    combobox = ttk.Combobox(master, textvariable=variable, values=list(converter.currencies.keys()), width=3)
-    combobox.grid(row=row, column=column, sticky='n', padx=5, pady=5)
-    combobox.bind('<KeyRelease>', lambda event: [combobox.set(combobox.get().upper()), update_combobox_options(combobox, variable)])
-    return combobox
+def setup_from_combobox(master, variable):
+    from_combobox = ttk.Combobox(master, textvariable=variable, values=list(converter.currencies.keys()), width=10)
+    from_combobox.place(relx=0.5, rely=0.15, anchor='center')
+    from_combobox.bind('<KeyRelease>', lambda event: [from_combobox.set(from_combobox.get().upper()), update_combobox_options(from_combobox, variable)])
+    return from_combobox
+
+def setup_to_combobox(master, variable):
+    to_combobox = ttk.Combobox(master, textvariable=variable, values=list(converter.currencies.keys()), width=10)
+    to_combobox.place(relx=0.5, rely=0.25, anchor='center')
+    to_combobox.bind('<KeyRelease>', lambda event: [to_combobox.set(to_combobox.get().upper()), update_combobox_options(to_combobox, variable)])
+    return to_combobox
 
 def update_combobox_options(combobox, variable):
     typed_value = combobox.get().upper()
@@ -24,16 +30,13 @@ def update_combobox_options(combobox, variable):
     filtered_options = [currency for currency in all_currencies if typed_value in currency]
     
     if typed_value:
+        combobox['values'] = filtered_options
+        
         matches = difflib.get_close_matches(typed_value, filtered_options, n=1, cutoff=0.6)
         if matches:
             closest_match = matches[0]
-            if typed_value != closest_match:
-                combobox['values'] = [closest_match] + [currency for currency in filtered_options if currency != closest_match]
+            if typed_value != closest_match and len(typed_value) >= len(closest_match) - 1:
                 variable.set(closest_match)
-            else:
-                combobox['values'] = filtered_options
-        else:
-            combobox['values'] = filtered_options
     else:
         combobox['values'] = all_currencies
 
@@ -43,7 +46,7 @@ def conversion():
     amount = amount_entry.get()
 
     if not amount.replace('.', '', 1).isdigit():
-        error_label.config(text="Please enter a valid number", foreground="white")
+        error_label.config(text="Please enter a valid number")
         return
 
     amount = float(amount)
@@ -56,6 +59,7 @@ def conversion():
     
     result_text = f"{amount:.2f} {source_currency} is {result:.4f} {target_currency}"
     result_label.config(text=result_text[:5] + result_text[5:])
+    error_label.config(text='')
 
 def clear():
     source_currency_var.set('')
@@ -91,6 +95,7 @@ conversion_app.title('Currency Converter')
 conversion_app.geometry('350x300')
 conversion_app.configure(bg='black')
 conversion_app.eval('tk::PlaceWindow . center')
+conversion_app.resizable(False, False)
 
 style = ttk.Style()
 style.theme_use('default')
@@ -103,38 +108,27 @@ style.configure('TCombobox', fieldbackground='white', background='white', foregr
 source_currency_var = tk.StringVar(conversion_app)
 target_currency_var = tk.StringVar(conversion_app)
 
-ttk.Label(conversion_app, text='From:', font='Calibri 12').grid(row=0, column=1, pady=(15, 0), padx=(15, 0))
-ttk.Label(conversion_app, text='To:', font='Calibri 12').grid(row=1, column=1, pady=(15, 0), padx=(15, 0))
-ttk.Label(conversion_app, text='Amount:', font='Calibri 12').grid(row=2, column=1, pady=(12, 0), padx=(15, 0))
+ttk.Label(conversion_app, text='From:', font='Arial 10 bold').place(relx=0.3, rely=0.15, anchor='center')
+ttk.Label(conversion_app, text='To:', font='Arial 10 bold').place(relx=0.3, rely=0.25, anchor='center')
+ttk.Label(conversion_app, text='Amount:', font='Arial 10 bold').place(relx=0.13, rely=0.4, anchor='center')
 
-widget_width = 200
-widget_height = 25
-
-x_position = (350 - widget_width) / 2
-y_positions = {
-    'amount_entry': 85,
-    'button_convert': 115,
-    'button_clear': 145,
-    'error_label': 205,
-}
-
-amount_entry = ttk.Entry(conversion_app, font='Calibri 12', justify='center')
-amount_entry.place(x=x_position-1, y=y_positions['amount_entry'], width=widget_width, height=widget_height)
+amount_entry = ttk.Entry(conversion_app, font='Arial 10', justify='center')
+amount_entry.place(relx=0.5, rely=0.4, anchor='center')
 amount_entry.bind('<KeyRelease>', enforce_decimal_limit)
 
-result_label = ttk.Label(conversion_app, font='Calibri 12 bold', foreground='green')
-result_label.place(relx=0.5, rely=0.61, anchor='center')
-
-error_label = ttk.Label(conversion_app, font='Calibri 10', foreground='red')
-error_label.place(x=x_position, y=y_positions['error_label'], width=widget_width, height=widget_height)
-
 button_convert = ttk.Button(conversion_app, text='Convert', command=conversion)
-button_convert.place(x=x_position, y=y_positions['button_convert'], width=widget_width, height=widget_height)
+button_convert.place(relx=0.5, rely=0.5, anchor='center')
 
 button_clear = ttk.Button(conversion_app, text='Clear', command=clear)
-button_clear.place(x=x_position, y=y_positions['button_clear'], width=widget_width, height=widget_height)
+button_clear.place(relx=0.5, rely=0.6, anchor='center')
 
-setup_combobox(conversion_app, source_currency_var, 0, 1)
-setup_combobox(conversion_app, target_currency_var, 1, 1)
+result_label = ttk.Label(conversion_app, font='Arial 10 bold', foreground='green')
+result_label.place(relx=0.5, rely=0.7, anchor='center')
+
+error_label = ttk.Label(conversion_app, font='Arial 10', foreground='red')
+error_label.place(relx=0.5, rely=0.7, anchor='center')
+
+setup_from_combobox(conversion_app, source_currency_var)
+setup_to_combobox(conversion_app, target_currency_var)
 
 conversion_app.mainloop()
