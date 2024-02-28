@@ -75,6 +75,15 @@ def save_data(source, target, amount, result):
         json.dump(data, file)
         file.write("\n")
 
+def enforce_decimal_limit(event):
+    content = amount_entry.get()
+    if '.' in content:
+        parts = content.split('.')
+        if len(parts) > 1 and len(parts[1]) > 2:
+            new_content = parts[0] + '.' + parts[1][:2]
+            amount_entry.delete(0, tk.END)
+            amount_entry.insert(0, new_content)
+
 converter = CurrencyConverter('currencies.json')
 
 conversion_app = tk.Tk()
@@ -94,9 +103,9 @@ style.configure('TCombobox', fieldbackground='white', background='white', foregr
 source_currency_var = tk.StringVar(conversion_app)
 target_currency_var = tk.StringVar(conversion_app)
 
-ttk.Label(conversion_app, text='From:', font='Calibri 12').grid(row=0, column=1, pady=(15, 0))
-ttk.Label(conversion_app, text='To:', font='Calibri 12').grid(row=1, column=1, pady=(15, 0))
-ttk.Label(conversion_app, text='Amount:', font='Calibri 12').grid(row=2, column=1, pady=(12, 0))
+ttk.Label(conversion_app, text='From:', font='Calibri 12').grid(row=0, column=1, pady=(15, 0), padx=(15, 0))
+ttk.Label(conversion_app, text='To:', font='Calibri 12').grid(row=1, column=1, pady=(15, 0), padx=(15, 0))
+ttk.Label(conversion_app, text='Amount:', font='Calibri 12').grid(row=2, column=1, pady=(12, 0), padx=(15, 0))
 
 widget_width = 200
 widget_height = 25
@@ -109,8 +118,9 @@ y_positions = {
     'error_label': 205,
 }
 
-amount_entry = ttk.Entry(conversion_app, font='Calibri 12')
+amount_entry = ttk.Entry(conversion_app, font='Calibri 12', justify='center')
 amount_entry.place(x=x_position-1, y=y_positions['amount_entry'], width=widget_width, height=widget_height)
+amount_entry.bind('<KeyRelease>', enforce_decimal_limit)
 
 result_label = ttk.Label(conversion_app, font='Calibri 12 bold', foreground='green')
 result_label.place(relx=0.5, rely=0.61, anchor='center')

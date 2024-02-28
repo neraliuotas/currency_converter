@@ -46,3 +46,6 @@
 {"source_currency": "USD", "target_currency": "EUR", "amount": 123.0, "result": 139.9125}
 {"source_currency": "USD", "target_currency": "EUR", "amount": 123.0, "result": 139.851}
 {"source_currency": "USD", "target_currency": "EUR", "amount": 123.12, "result": 140.122872}
+{"source_currency": "USD", "target_currency": "EUR", "amount": 100.0, "result": 92.42}
+{"source_currency": "", "target_currency": "", "amount": 100.0, "result": 0.0}
+{"source_currency": "AUD", "target_currency": "EUR", "amount": 100.0, "result": 59.98}
