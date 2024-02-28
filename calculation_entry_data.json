@@ -8,3 +8,41 @@
 {"source_currency": "EUR", "target_currency": "USD", "amount": 10.0, "result": 10.81, "rounded": false}
 {"source_currency": "USD", "target_currency": "EUR", "amount": 10.0, "result": 9.245, "rounded": false}
 {"source_currency": "USD", "target_currency": "EUR", "amount": 10.0, "result": 9.245, "rounded": true}
+{"source_currency": "USD", "target_currency": "EUR", "amount": 10.0, "result": 9.246, "rounded": false}
+{"source_currency": "AUD", "target_currency": "BHD", "amount": 10.0, "result": 2.443, "rounded": false}
+{"source_currency": "USD", "target_currency": "EUR", "amount": 10.0, "result": 9.248, "rounded": false}
+{"source_currency": "EUR", "target_currency": "RUR", "amount": 10.0, "result": 0.0, "rounded": false}
+{"source_currency": "EUR", "target_currency": "RUB", "amount": 10.0, "result": 991.11, "rounded": false}
+{"source_currency": "EUR", "target_currency": "RUB", "amount": 10.0, "result": 991.11, "rounded": true}
+{"source_currency": "EUR", "target_currency": "RUB", "amount": 10.0, "result": 991.11, "rounded": false}
+{"source_currency": "EUR", "target_currency": "RUB", "amount": 10.0, "result": 989.32, "rounded": false}
+{"source_currency": "EUR", "target_currency": "RUB", "amount": 10.0, "result": 989.32, "rounded": false}
+{"source_currency": "EUR", "target_currency": "RUB", "amount": 10.0, "result": 989.32, "rounded": false}
+{"source_currency": "EUR", "target_currency": "RUB", "amount": 10.0, "result": 989.32, "rounded": false}
+{"source_currency": "AUD", "target_currency": "BGN", "amount": 111.0, "result": 1448.55}
+{"source_currency": "USD", "target_currency": "EUR", "amount": 100.0, "result": 924.3}
+{"source_currency": "AUD", "target_currency": "CAD", "amount": 200.0, "result": 3531.2}
+{"source_currency": "USD", "target_currency": "EUR", "amount": 100.0, "result": 9248.0}
+{"source_currency": "AUD", "target_currency": "EUR", "amount": 100.0, "result": 6008.0}
+{"source_currency": "ASUD", "target_currency": "EUR", "amount": 12.0, "result": 0.0}
+{"source_currency": "AUD", "target_currency": "ARS", "amount": 12.0, "result": 78678.36}
+{"source_currency": "AUD", "target_currency": "ARS", "amount": 12.0, "result": 78667.20000000001}
+{"source_currency": "AUD", "target_currency": "ARS", "amount": 32.0, "result": 559411.52}
+{"source_currency": "AUD", "target_currency": "EUR", "amount": 123.0, "result": 9088.47}
+{"source_currency": "EUR", "target_currency": "AUD", "amount": 12.0, "result": 239.64}
+{"source_currency": "EUR", "target_currency": "AUD", "amount": 1288888.0, "result": 2765418256813.6797}
+{"source_currency": "CHF", "target_currency": "AUD", "amount": 12.0, "result": 251.64}
+{"source_currency": "AUD", "target_currency": "EUR", "amount": 123.0, "result": 909.216}
+{"source_currency": "AUD", "target_currency": "EUR", "amount": 1234444.0, "result": 91588014711.672}
+{"source_currency": "EUR", "target_currency": "AUD", "amount": 123.0, "result": 2517.0719999999997}
+{"source_currency": "EUR", "target_currency": "AUD", "amount": 123.0, "result": 2516.9489999999996}
+{"source_currency": "EUR", "target_currency": "AUD", "amount": 123.3, "result": 2529.2529}
+{"source_currency": "EUR", "target_currency": "AUD", "amount": 123.33, "result": 2530.48494}
+{"source_currency": "AUD", "target_currency": "CAD", "amount": 123.0, "result": 1335.534}
+{"source_currency": "AUD", "target_currency": "CAD", "amount": 123.0, "result": 13354.109999999999}
+{"source_currency": "AUD", "target_currency": "CAD", "amount": 123.0, "result": 133.52880000000002}
+{"source_currency": "USD", "target_currency": "EUR", "amount": 12.0, "result": 133.07999999999998}
+{"source_currency": "USD", "target_currency": "EUR", "amount": 123.0, "result": 1399.125}
+{"source_currency": "USD", "target_currency": "EUR", "amount": 123.0, "result": 139.9125}
+{"source_currency": "USD", "target_currency": "EUR", "amount": 123.0, "result": 139.851}
+{"source_currency": "USD", "target_currency": "EUR", "amount": 123.12, "result": 140.122872}
