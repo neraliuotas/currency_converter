@@ -4,3 +4,5 @@
 {"source_currency": "KZT", "target_currency": "JPY", "amount": 233.0, "result": 77.9851}
 {"source_currency": "AUD", "target_currency": "GBP", "amount": 5000.0, "result": 2565.0}
 {"source_currency": "AUD", "target_currency": "GBP", "amount": 5000.0, "result": 2564.5}
+{"source_currency": "AUD", "target_currency": "EUR", "amount": 1000000.0, "result": 599100.0}
+{"source_currency": "USD", "target_currency": "EUR", "amount": 12312.0, "result": 11355.3576}

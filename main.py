@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup as bs
 import json
 import difflib
 
+
 class CurrencyConverter:
     def __init__(self, filepath):
         with open(filepath, 'r') as file:
